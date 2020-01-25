@@ -6,8 +6,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "browserlist": "^1.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0"
   },
   "scripts": {
@@ -16,8 +19,15 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "devDependencies": {
+    "js-cookie": "^2.2.0"
+  },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "resolutions": {
+    "browserslist": "4.6.2",
+    "caniuse-lite": "1.0.30000974"
   },
   "browserslist": {
     "production": [
