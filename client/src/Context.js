@@ -1,28 +1,65 @@
 import React, { Component } from 'react';
-
+import Cookies from 'js-cookie';
+import Data from './Data';
+//In React, Context is primarily used when some data needs to be accessible by many components at different nesting levels. Context lets you pass data through the component tree without having to pass props down manually at every level.
 const Context = React.createContext();
 
 export class Provider extends Component {
 
+  state = {
+    authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
+    isAuthenticated: false
+  };
+
   constructor() {
     super();
+    this.data = new Data();
   }
 
+
+
   render() {
+    const { authenticatedUser,isAuthenticated } = this.state;
+
+    const value = {
+    authenticatedUser,
+    isAuthenticated,
+    data: this.data,
+    actions: {
+      signIn: this.signIn,
+      signOut: this.signOut
+     }
+    };
+
     return (
-      <Context.Provider>
+      <Context.Provider value={value}>
         {this.props.children}
       </Context.Provider>
     );
   }
 
 
-  signIn = async () => {
-
+  signIn = async (username, password) => {
+    const user = await this.data.getUser(username, password);
+    if (user !== null) {
+      this.setState(() => {
+        return {
+          authenticatedUser: user,
+        };
+      });
+      // Set cookie
+      Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+    }
+    return user;
   }
 
   signOut = () => {
-
+    this.setState(() => {
+      return {
+        authenticatedUser: null,
+      };
+    });
+    Cookies.remove('authenticatedUser');
   }
 }
 

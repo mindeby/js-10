@@ -22,33 +22,33 @@ export default class UserSignUp extends Component {
       <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
-          <Form 
+          <Form
             cancel={this.cancel}
             errors={errors}
             submit={this.submit}
             submitButtonText="Sign Up"
             elements={() => (
               <React.Fragment>
-                <input 
-                  id="name" 
-                  name="name" 
+                <input
+                  id="name"
+                  name="name"
                   type="text"
-                  value={name} 
-                  onChange={this.change} 
+                  value={name}
+                  onChange={this.change}
                   placeholder="Name" />
-                <input 
-                  id="username" 
-                  name="username" 
+                <input
+                  id="username"
+                  name="username"
                   type="text"
-                  value={username} 
-                  onChange={this.change} 
+                  value={username}
+                  onChange={this.change}
                   placeholder="User Name" />
-                <input 
-                  id="password" 
+                <input
+                  id="password"
                   name="password"
                   type="password"
-                  value={password} 
-                  onChange={this.change} 
+                  value={password}
+                  onChange={this.change}
                   placeholder="Password" />
               </React.Fragment>
             )} />
@@ -72,10 +72,39 @@ export default class UserSignUp extends Component {
   }
 
   submit = () => {
+    const { context } = this.props;
+    const {
+      name,
+      username,
+      password,
+    } = this.state;
 
+    // New user payload
+    const user = {
+      name,
+      username,
+      password,
+    };
+
+    context.data.createUser(user)
+      .then( errors => {
+         if (errors.length) {
+          this.setState({ errors });
+          console.log(errors);
+         } else {
+           context.actions.signIn(username, password)
+             .then(() => {
+                this.props.history.push('/authenticated');
+              });
+            }
+       })
+       .catch( err => { // handle rejected promises
+         console.log(err);
+         this.props.history.push('/error'); // push to history stack
+       });
   }
 
   cancel = () => {
-
+    this.props.history.push('/');
   }
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.8.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -15,7 +16,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -27,7 +27,8 @@
   },
   "resolutions": {
     "browserslist": "4.6.2",
-    "caniuse-lite": "1.0.30000974"
+    "caniuse-lite": "1.0.30000974",
+    "**/@babel/runtime": "7.5.0"
   },
   "browserslist": {
     "production": [
