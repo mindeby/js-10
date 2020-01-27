@@ -6,24 +6,26 @@ const Context = React.createContext();
 
 export class Provider extends Component {
 
-  state = {
-    authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
-    isAuthenticated: false
-  };
 
   constructor() {
     super();
     this.data = new Data();
+    this.state = {
+        authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
+        password: Cookies.getJSON('password') || null,
+    };
   }
 
 
 
   render() {
-    const { authenticatedUser,isAuthenticated } = this.state;
+    const { authenticatedUser } = this.state;
+    const { password } = this.state;
+
 
     const value = {
     authenticatedUser,
-    isAuthenticated,
+    password,
     data: this.data,
     actions: {
       signIn: this.signIn,
@@ -39,12 +41,13 @@ export class Provider extends Component {
   }
 
 
-  signIn = async (username, password) => {
-    const user = await this.data.getUser(username, password);
+  signIn = async (emailAddress, password) => {
+    const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
       this.setState(() => {
         return {
           authenticatedUser: user,
+          password: password,
         };
       });
       // Set cookie
@@ -60,6 +63,7 @@ export class Provider extends Component {
       };
     });
     Cookies.remove('authenticatedUser');
+    Cookies.remove('password');
   }
 }
 
