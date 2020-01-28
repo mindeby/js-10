@@ -8,7 +8,6 @@ export default class Courses extends Component {
         this.state = {
             content: [],
         }
-        this.renderCourses.bind(this);
     }
 
     componentDidMount() {
@@ -24,20 +23,21 @@ export default class Courses extends Component {
       });
     }
 
-    renderCourses() {
-        let courses = '';
-        for (let i = 0; i < this.state.content.length; ++i) {
-            courses = this.state.content.map(course => `${course.title}` + " " + `${course.id}` + `${course.description}` + `${course.estimatedTime}` + `${course.materialsNeeded}` );
-        }
-        return courses;
-    }
-
     render() {
+      const courses = this.state.content.map((course) =>
+      <div className="grid-33">
+        <a className="course--module course--link" href="course-detail.html">
+          <h4 className="course--label">Course</h4>
+          <h3 className="course--title">{course.title}</h3>
+        </a>
+      </div>
+    );
+
         return(
             <div>
                 <hr />
                 <div className="bounds">
-                  <p>{this.renderCourses()}</p>
+                  {courses}
                 </div>
             </div>
         );

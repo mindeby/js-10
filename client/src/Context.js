@@ -6,7 +6,6 @@ const Context = React.createContext();
 
 export class Provider extends Component {
 
-
   constructor() {
     super();
     this.data = new Data();
@@ -16,12 +15,9 @@ export class Provider extends Component {
     };
   }
 
-
-
   render() {
     const { authenticatedUser } = this.state;
     const { password } = this.state;
-
 
     const value = {
     authenticatedUser,
