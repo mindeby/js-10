@@ -11,6 +11,7 @@ import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
 import Forbidden from './components/Forbidden';
 
 
@@ -30,6 +31,7 @@ export default () => (
       <HeaderWithContext />
       <Switch>
         <Route exact path="/" component={Courses} />
+        <Route path="/courses/:id" component={CourseDetail} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/forbidden" component={Forbidden} />
         <Route path="/signup" component={UserSignUpWithContext} />
