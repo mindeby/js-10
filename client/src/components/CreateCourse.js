@@ -10,17 +10,14 @@ export default class CreateCourse extends Component {
             description: '',
             estimatedTime: '',
             materialsNeeded: '',
+            user:'',
             newCourseId: null,
-            firstName: '',
-            lastName: '',
             errors: [],
         }
     }
 
     render() {
-
         const authUser = this.props.context.authenticatedUser;
-
         const {
             title,
             description,
@@ -29,7 +26,7 @@ export default class CreateCourse extends Component {
             errors
         } = this.state;
 
-        return(
+        return (
             <div>
                 <hr />
                 <div className="bounds course--detail">
@@ -142,7 +139,7 @@ export default class CreateCourse extends Component {
 
         console.log(context);
 
-        context.data.createCourse(course, authUser.emailAddress, context.password)
+        context.data.createCourse(course, authUser.email, context.password)
           .then( errors => {
             if (errors.length) {
               this.setState({errors});

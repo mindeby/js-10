@@ -1,10 +1,13 @@
 import React from 'react';
 
-const Forbidden = () => (
-    <div>
-      <h1>Forbidden</h1>
-      <p>Oh oh! You can't access this page.</p>
-    </div>
-);
-
-export default Forbidden;
+export default function Forbidden() {
+    return(
+        <div>
+            <hr />
+            <div className="bounds">
+                <h1>Forbidden</h1>
+                <p>Oh oh! You can't access this page.</p>
+            </div>
+        </div>
+    );
+}

@@ -19,13 +19,14 @@ export class Provider extends Component {
     const { authenticatedUser } = this.state;
     const { password } = this.state;
 
+
     const value = {
     authenticatedUser,
     password,
     data: this.data,
     actions: {
       signIn: this.signIn,
-      signOut: this.signOut
+      signOut: this.signOut,
      }
     };
 
