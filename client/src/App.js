@@ -11,9 +11,12 @@ import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import Courses from './components/Courses';
+<<<<<<< HEAD
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+=======
+>>>>>>> parent of b995d47... GET individual courses detail
 import Forbidden from './components/Forbidden';
 import Error from './components/Error';
 
@@ -36,9 +39,14 @@ export default () => (
       <HeaderWithContext />
       <Switch>
         <Route exact path="/" component={Courses} />
+<<<<<<< HEAD
         <Route path="/courses/:id" component={CourseDetailWithContext} />
         <PrivateRoute exact path="/courses/create" component={CreateCourseWithContext} />
         <PrivateRoute exact path="/courses/:id/update" component={UpdateCourseWithContext} />
+=======
+        <Route path="/signin" component={UserSignInWithContext} />
+        <Route path="/forbidden" component={Forbidden} />
+>>>>>>> parent of b995d47... GET individual courses detail
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
