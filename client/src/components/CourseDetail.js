@@ -11,18 +11,22 @@ export default class CourseDetail extends Component {
      }
    }
 
-
    componentDidMount() {
      axios.get(`http://localhost:5000/api/courses/${this.routeParam}`)
      .then(res => {
          this.setState({
            content: res.data,
          })
+         console.log(this.state)
        }
      )
      .catch(error => {
      console.log("Error fetching and parsing data", error);
      });
+   }
+
+   delete(){
+
    }
 
    render() {
@@ -33,8 +37,8 @@ export default class CourseDetail extends Component {
         <div className="bounds">
           <div className="bounds">
             <span>
-              <a className="button" href="update-course.html">Update Course</a>
-              <a className="button" href="#">Delete Course</a>
+              <a className="button" href="#" onClick={this.update}>Update Course</a>
+              <a className="button"  href="#" onClick={this.delete}>Delete Course</a>
             </span>
             <a className="button button-secondary" href="/">Return to List</a>
           </div>

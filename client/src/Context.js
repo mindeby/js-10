@@ -48,6 +48,7 @@ export class Provider extends Component {
       });
       // Set cookie
       Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+      Cookies.set('password', JSON.stringify(password), { expires: 1 });
     }
     return user;
   }
@@ -56,6 +57,7 @@ export class Provider extends Component {
     this.setState(() => {
       return {
         authenticatedUser: null,
+        password: null,
       };
     });
     Cookies.remove('authenticatedUser');
