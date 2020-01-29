@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -68,5 +67,3 @@ export default class CourseDetail extends Component {
      )
    };
 }
-=======
->>>>>>> parent of b995d47... GET individual courses detail
