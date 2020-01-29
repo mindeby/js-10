@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Form from './Form';
+import axios from 'axios';
 
-export default class CreateCourse extends Component {
+export default class CreateCourse extends React.Component {
 
     constructor(props) {
         super(props);
@@ -10,96 +11,94 @@ export default class CreateCourse extends Component {
             description: '',
             estimatedTime: '',
             materialsNeeded: '',
-            user:'',
             newCourseId: null,
+            user:'',
             errors: [],
         }
     }
 
     render() {
-        const authUser = this.props.context.authenticatedUser;
         const {
             title,
             description,
             estimatedTime,
             materialsNeeded,
+            user,
             errors
         } = this.state;
 
-        return (
+        return(
             <div>
                 <hr />
                 <div className="bounds course--detail">
-                    <h1>Create Course</h1>
-                    <Form
-                        cancel={this.cancel}
-                        errors={errors}
-                        submit={this.submit}
-                        submitButtonText="Create Course"
-                        elements={() => (
-                            <div>
-                                <div className="grid-66">
-                                    <div className="course--header">
-                                        <h4 className="course--label">Course</h4>
-                                        <div>
-                                            <input
-                                                id="title"
-                                                name="title"
-                                                type="text"
-                                                value={title}
-                                                onChange={this.change}
-                                                className="input-title course--title--input"
-                                                placeholder="Course title..." />
-                                        </div>
-                                        <p>By {authUser.firstName} {authUser.lastName}</p>
+                  <h1>Create Course</h1>
+                  <Form
+                      cancel={this.cancel}
+                      errors={errors}
+                      submit={this.submit}
+                      submitButtonText="Create Course"
+                      elements={() => (
+                        <div>
+                            <div className="grid-66">
+                                <div className="course--header">
+                                    <h4 className="course--label">Course</h4>
+                                    <div>
+                                      <React.Fragment>
+                                        <input
+                                            id="title"
+                                            name="title"
+                                            type="text"
+                                            value={title || ''}
+                                            onChange={this.change}
+                                            className="input-title course--title--input"/>
+                                        </React.Fragment>
                                     </div>
-                                    <div className="course--description">
-                                        <div>
-                                            <textarea
-                                                id="description"
-                                                name="description"
-                                                type="text"
-                                                value={description}
-                                                onChange={this.change}
-                                                className=""
-                                                placeholder="Course description..." />
-                                        </div>
-                                    </div>
+                                    <p>By {user.firstName} {user.lastName}</p>
                                 </div>
-                                <div className="grid-25 grid-right">
-                                    <div className="course--stats">
-                                        <ul className="course--stats--list">
-                                            <li className="course--stats--list--item">
-                                                <h4>Estimated Time</h4>
-                                                <div>
-                                                    <input
-                                                        id="estimatedTime"
-                                                        name="estimatedTime"
-                                                        type="text"
-                                                        value={estimatedTime}
-                                                        onChange={this.change}
-                                                        className="course--time--input"
-                                                        placeholder="Hours" />
-                                                </div>
-                                            </li>
-                                            <li className="course--stats--list--item">
-                                                <h4>Materials Needed</h4>
-                                                <div>
-                                                    <textarea
-                                                        id="materialsNeeded"
-                                                        name="materialsNeeded"
-                                                        type="text"
-                                                        value={materialsNeeded}
-                                                        onChange={this.change}
-                                                        className=""
-                                                        placeholder="List materials..." />
-                                                </div>
-                                            </li>
-                                        </ul>
+                                <div className="course--description">
+                                    <div>
+                                        <textarea
+                                            id="description"
+                                            name="description"
+                                            type="text"
+                                            value={description || ''}
+                                            onChange={this.change}
+                                            className="" />
                                     </div>
                                 </div>
                             </div>
-                        )} />
+                            <div className="grid-25 grid-right">
+                                <div className="course--stats">
+                                    <ul className="course--stats--list">
+                                        <li className="course--stats--list--item">
+                                            <h4>Estimated Time</h4>
+                                            <div>
+                                                <input
+                                                    id="estimatedTime"
+                                                    name="estimatedTime"
+                                                    type="text"
+                                                    value={estimatedTime || ''}
+                                                    onChange={this.change}
+                                                    className="course--time--input" />
+                                            </div>
+                                        </li>
+                                        <li className="course--stats--list--item">
+                                            <h4>Materials Needed</h4>
+                                            <div>
+                                                <textarea
+                                                    id="materialsNeeded"
+                                                    name="materialsNeeded"
+                                                    type="text"
+                                                    value={materialsNeeded || ''}
+                                                    onChange={this.change}
+                                                    className="" />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                      )} />
                 </div>
             </div>
         );
@@ -137,29 +136,13 @@ export default class CreateCourse extends Component {
 
         const authUser = context.authenticatedUser;
 
-        console.log(context);
-
-        context.data.createCourse(course, authUser.email, context.password)
+        context.data.createCourse(course, this.state.newCourseId, authUser.email, context.password)
           .then( errors => {
             if (errors.length) {
               this.setState({errors});
             } else {
-              console.log(`Course "${title}" has been successfully registered!`);
-              context.data.getCourses()
-                .then( courses => {
-                    if (courses === null) {
-                    this.setState(() => {
-                        return { errors: [ 'Unable to connect to server.' ] };
-                    });
-                    } else {
-                        this.setState({newCourseId: courses[courses.length-1]});
-                        this.props.history.push('/courses/' + this.state.newCourseId.id);
-                    }
-                })
-                .catch( err => {
-                    console.log(err);
-                    this.props.history.push('/error');
-                })
+              console.log(`Course "${title}" has been successfully created!`);
+              this.props.history.push('/courses/' + this.state.newCourseId);
             }
           })
           .catch( err => { // handle rejected promises
@@ -167,10 +150,9 @@ export default class CreateCourse extends Component {
               this.props.history.push('/error'); // push to history stack
           });
 
-      }
+    }
 
-      cancel = () => {
+    cancel = () => {
         this.props.history.push('/');
-      }
-
+    }
 }

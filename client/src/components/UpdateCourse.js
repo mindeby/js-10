@@ -2,7 +2,7 @@ import React from 'react';
 import Form from './Form';
 import axios from 'axios';
 
-export default class CreateCourse extends React.Component {
+export default class UpdateCourse extends React.Component {
 
     constructor(props) {
         super(props);
@@ -152,7 +152,6 @@ export default class CreateCourse extends React.Component {
 
         const authUser = context.authenticatedUser;
 
-        // Fix password authentication
         context.data.updateCourse(course, this.props.match.params.id, authUser.email, context.password)
           .then( errors => {
             if (errors.length) {
