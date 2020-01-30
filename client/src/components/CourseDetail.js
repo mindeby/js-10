@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import NotFound from './NotFound';
+import ReactMarkdown from 'react-markdown';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
@@ -37,6 +39,7 @@ export default class Courses extends Component {
                     errors: [ 'Unable to fulfill your request.' ]
                   };
               });
+              this.props.history.push('/notfound');
           } else {
               if (authUser !== null) {
                 if (authUser.email === course.User.emailAddress) {
@@ -100,7 +103,7 @@ export default class Courses extends Component {
                           <p>By {this.state.user.firstName} {this.state.user.lastName}</p>
                       </div>
                       <div className="course--description">
-                          {this.state.content.description}
+                          <ReactMarkdown source={this.state.content.description}></ReactMarkdown>
                       </div>
                   </div>
               </div>
@@ -113,7 +116,7 @@ export default class Courses extends Component {
                           </li>
                           <li className="course--stats--list--item">
                               <h4>Materials Needed</h4>
-                              <ul>{this.state.content.materialsNeeded}</ul>
+                              <ul><ReactMarkdown source={this.state.content.materialsNeeded}></ReactMarkdown></ul>
                           </li>
                       </ul>
                   </div>

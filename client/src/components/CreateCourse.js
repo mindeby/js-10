@@ -10,7 +10,6 @@ export default class CreateCourse extends React.Component {
             description: '',
             estimatedTime: '',
             materialsNeeded: '',
-            newCourseId: null,
             errors: [],
         }
     }
@@ -113,9 +112,6 @@ export default class CreateCourse extends React.Component {
     }
 
     submit = () => {
-
-        const { context } = this.props;
-
         const {
           title,
           description,
@@ -123,13 +119,14 @@ export default class CreateCourse extends React.Component {
           materialsNeeded,
         } = this.state;
 
-        // New course payload
         const course = {
             title,
             description,
             estimatedTime,
             materialsNeeded
         }
+
+        const { context } = this.props;
 
         const authUser = context.authenticatedUser;
 
@@ -138,14 +135,12 @@ export default class CreateCourse extends React.Component {
             if (errors.length) {
               this.setState({errors});
             } else {
-
-              console.log(`Course "${title}" has been successfully created!`);
               this.props.history.push('/');
             }
           })
-          .catch( err => { // handle rejected promises
+          .catch( err => {
               console.log(err);
-              this.props.history.push('/error'); // push to history stack
+              this.props.history.push('/error');
           });
 
     }

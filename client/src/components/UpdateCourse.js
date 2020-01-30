@@ -26,10 +26,14 @@ export default class UpdateCourse extends React.Component {
                   materialsNeeded: res.data.materialsNeeded,
                   user: res.data.User,
               })
+              if (this.props.context.authenticatedUser.email !== this.state.user.emailAddress){
+                this.props.history.push('/forbidden');
+              }
             }
           )
           .catch(error => {
           console.log("Error fetching and parsing data", error);
+          this.props.history.push('/notfound');
           });
     }
 

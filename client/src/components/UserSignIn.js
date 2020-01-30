@@ -64,6 +64,7 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const { context } = this.props;
+    // redirects users back to their previous screen
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
     context.actions.signIn(emailAddress, password)
