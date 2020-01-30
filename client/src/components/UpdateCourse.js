@@ -26,6 +26,7 @@ export default class UpdateCourse extends React.Component {
                   materialsNeeded: res.data.materialsNeeded,
                   user: res.data.User,
               })
+              //if the user doesn't own that course redirect to forbidden
               if (this.props.context.authenticatedUser.email !== this.state.user.emailAddress){
                 this.props.history.push('/forbidden');
               }
@@ -146,7 +147,7 @@ export default class UpdateCourse extends React.Component {
           materialsNeeded,
         } = this.state;
 
-        // New course payload
+        //course to submit on Put request
         const course = {
             title,
             description,

@@ -64,9 +64,10 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const { context } = this.props;
-    // redirects users back to their previous screen
+    // (from) redirects users back to their previous screen doesn't matter in which path they are
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
+    //Try to sign in, if there is a user Sign In is successful and the user is redirected to previous page
     context.actions.signIn(emailAddress, password)
       .then( user => {
         if (user === null) {

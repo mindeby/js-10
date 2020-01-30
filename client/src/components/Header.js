@@ -5,7 +5,8 @@ export default class Header extends React.PureComponent {
   render() {
     const { context } = this.props;
     const authUser = context.authenticatedUser;
-
+    
+//If the user is authenticated set the header to display the name of the user and a sign out button
     return (
       <div className="header">
         <div className="bounds">

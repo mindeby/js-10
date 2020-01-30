@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NotFound from './NotFound';
 import ReactMarkdown from 'react-markdown';
 import {Link} from 'react-router-dom';
 import axios from 'axios';

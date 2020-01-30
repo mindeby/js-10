@@ -5,6 +5,7 @@ import {
   Switch
 } from 'react-router-dom';
 
+//Components Import
 import Header from './components/Header';
 import NotFound from './components/NotFound';
 import UserSignUp from './components/UserSignUp';
@@ -17,11 +18,11 @@ import UpdateCourse from './components/UpdateCourse';
 import Forbidden from './components/Forbidden';
 import Error from './components/Error';
 
-
-// New import
-import withContext from './Context';
+//Private Route Component to render Create and Update Course With Context only if the user is authenticated
 import PrivateRoute from './PrivateRoute';
 
+// Context Components
+import withContext from './Context';
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
@@ -30,6 +31,7 @@ const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CoursesWithContext = withContext(Courses);
+
 
 
 export default () => (

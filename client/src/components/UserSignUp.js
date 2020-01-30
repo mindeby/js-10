@@ -99,7 +99,6 @@ export default class UserSignUp extends Component {
       checkPassword,
     } = this.state;
 
-    // New user payload
     const user = {
       firstName,
       lastName,

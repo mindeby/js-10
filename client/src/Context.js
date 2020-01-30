@@ -47,13 +47,14 @@ export class Provider extends Component {
           password: password,
         };
       });
-      // Set cookie
+      // Set cookies for user and password
       Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
       Cookies.set('password', JSON.stringify(password), { expires: 1 });
     }
     return user;
   }
 
+  //Connected to component UserSignOut to forget authenticated user
   signOut = () => {
     this.setState(() => {
       return {
@@ -61,6 +62,8 @@ export class Provider extends Component {
         password: null,
       };
     });
+
+    // Forget cookies for user and password
     Cookies.remove('authenticatedUser');
     Cookies.remove('password');
   }

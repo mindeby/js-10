@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './Context';
 
+
+//If the user is not authenticated redirect to the Sign In page
 export default ({ component: Component, ...rest }) => {
   return (
     <Consumer>
