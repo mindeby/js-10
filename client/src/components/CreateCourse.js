@@ -1,6 +1,5 @@
 import React from 'react';
 import Form from './Form';
-import axios from 'axios';
 
 export default class CreateCourse extends React.Component {
 
@@ -12,7 +11,6 @@ export default class CreateCourse extends React.Component {
             estimatedTime: '',
             materialsNeeded: '',
             newCourseId: null,
-            user:'',
             errors: [],
         }
     }
@@ -23,8 +21,7 @@ export default class CreateCourse extends React.Component {
             description,
             estimatedTime,
             materialsNeeded,
-            user,
-            errors
+            errors,
         } = this.state;
 
         return(
@@ -53,7 +50,7 @@ export default class CreateCourse extends React.Component {
                                             className="input-title course--title--input"/>
                                         </React.Fragment>
                                     </div>
-                                    <p>By {user.firstName} {user.lastName}</p>
+                                    <p>By {this.props.context.authenticatedUser.firstName} {this.props.context.authenticatedUser.lastName}</p>
                                 </div>
                                 <div className="course--description">
                                     <div>
@@ -136,13 +133,14 @@ export default class CreateCourse extends React.Component {
 
         const authUser = context.authenticatedUser;
 
-        context.data.createCourse(course, this.state.newCourseId, authUser.email, context.password)
+        context.data.createCourse(course, authUser.email, context.password)
           .then( errors => {
             if (errors.length) {
               this.setState({errors});
             } else {
+
               console.log(`Course "${title}" has been successfully created!`);
-              this.props.history.push('/courses/' + this.state.newCourseId);
+              this.props.history.push('/');
             }
           })
           .catch( err => { // handle rejected promises
