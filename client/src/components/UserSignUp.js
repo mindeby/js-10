@@ -8,6 +8,7 @@ export default class UserSignUp extends Component {
     lastName: '',
     emailAddress: '',
     password: '',
+    checkPassword: '',
     errors: [],
   }
 
@@ -17,6 +18,7 @@ export default class UserSignUp extends Component {
       lastName,
       emailAddress,
       password,
+      checkPassword,
       errors,
     } = this.state;
 
@@ -59,6 +61,13 @@ export default class UserSignUp extends Component {
                   value={password}
                   onChange={this.change}
                   placeholder="Password" />
+                <input
+                  id="confirmPassword"
+                  name="checkPassword"
+                  type="password"
+                  value={checkPassword}
+                  onChange={this.change}
+                  placeholder="Confirm Password" />
               </React.Fragment>
             )} />
           <p>
@@ -87,6 +96,7 @@ export default class UserSignUp extends Component {
       lastName,
       emailAddress,
       password,
+      checkPassword,
     } = this.state;
 
     // New user payload
@@ -95,24 +105,29 @@ export default class UserSignUp extends Component {
       lastName,
       emailAddress,
       password,
+      checkPassword
     };
 
-    context.data.createUser(user)
-      .then( errors => {
-         if (errors.length) {
-          this.setState({ errors });
-          console.log(errors);
-         } else {
-           context.actions.signIn(emailAddress, password)
-             .then(() => {
-                this.props.history.push('/');
-              });
-            }
-       })
-       .catch( err => { // handle rejected promises
-         console.log(err);
-         this.props.history.push('/error'); // push to history stack
-       });
+    if (password === checkPassword) {
+      context.data.createUser(user)
+        .then( errors => {
+           if (errors.length) {
+            this.setState({ errors });
+            console.log(errors);
+           } else {
+             context.actions.signIn(emailAddress, password)
+               .then(() => {
+                  this.props.history.push('/');
+                });
+              }
+         })
+         .catch( err => { // handle rejected promises
+           console.log(err);
+           this.props.history.push('/error'); // push to history stack
+         });
+    } else {
+      alert("Please double check your password")
+    }
   }
 
   cancel = () => {
