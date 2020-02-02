@@ -103,29 +103,26 @@ export default class UserSignUp extends Component {
       firstName,
       lastName,
       emailAddress,
-      password,
-      checkPassword
+      password
     };
 
-    if (password === checkPassword) {
-      context.data.createUser(user)
-        .then( errors => {
-           if (errors.length) {
-            this.setState({ errors });
-            console.log(errors);
-           } else {
-             context.actions.signIn(emailAddress, password)
-               .then(() => {
-                  this.props.history.push('/');
-                });
-              }
-         })
-         .catch( err => { // handle rejected promises
-           console.log(err);
-           this.props.history.push('/error'); // push to history stack
-         });
+    if (password === checkPassword){
+      context.data.createUser(user).then( errors => {
+         if (errors.length) {
+          this.setState({ errors });
+         } else {
+           context.actions.signIn(emailAddress, password)
+             .then(() => {
+                this.props.history.push('/');
+              });
+            }
+       })
+       .catch( err => { // handle rejected promises
+         console.log(err);
+         this.props.history.push('/error'); // push to history stack
+       });
     } else {
-      alert("Please double check your password")
+      alert("Please check again your password confirmation")
     }
   }
 

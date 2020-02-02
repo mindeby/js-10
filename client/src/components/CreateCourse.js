@@ -139,7 +139,6 @@ export default class CreateCourse extends React.Component {
             }
           })
           .catch( err => {
-              console.log(err);
               this.props.history.push('/error');
           });
 

@@ -76,9 +76,11 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
 router.post('/users', [
   check('firstName')
     .exists()
+    .isAlphanumeric()
     .withMessage('Please provide a value for "first name"'),
   check('lastName')
     .exists()
+    .isAlphanumeric()
     .withMessage('Please provide a value for "last Name"'),
   check('emailAddress')
     .custom(async email => {
@@ -93,6 +95,7 @@ router.post('/users', [
     .withMessage('Please provide a value for "emailAddress"'),
   check('password')
     .exists()
+    .isAlphanumeric()
     .withMessage('Please provide a value for "password"'),
 ], asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -121,9 +124,5 @@ router.delete('/users/:id', asyncHandler(async (req, res) => {
     res.sendStatus(404);
   }
 }));*/
-
-
-
-
 
 module.exports = router;
