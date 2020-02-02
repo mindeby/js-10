@@ -67,22 +67,30 @@ export default class UserSignIn extends Component {
     // (from) redirects users back to their previous screen doesn't matter in which path they are
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
+
     //Try to sign in, if there is a user Sign In is successful and the user is redirected to previous page
-    context.actions.signIn(emailAddress, password)
-      .then( user => {
-        if (user === null) {
-          this.setState(() => {
-            return { errors: [ 'Sign-in was unsuccessful' ] };
-          });
-        } else {
-          console.log("Successful authentication")
-          this.props.history.push(from);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        this.props.history.push('/error');
-      })
+    if (emailAddress && password){
+      context.actions.signIn(emailAddress, password)
+        .then( user => {
+          if (user === null) {
+            this.setState(() => {
+              return { errors: [ 'Sign-in was unsuccessful' ] };
+            });
+          } else {
+            console.log("Successful authentication")
+            this.props.history.push(from);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push('/error');
+        })
+    } else {
+      this.setState(() => {
+        return { errors: [ "You can't leave empty fields for EmailAddress and Password" ] };
+      });
+    }
+
   }
 
   cancel = () => {
