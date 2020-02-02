@@ -16,7 +16,7 @@ export default class UpdateCourse extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount() { //make a get request to the api/courses/:id and set the state to the matching course
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
           .then(res => {
               this.setState({
@@ -38,7 +38,7 @@ export default class UpdateCourse extends React.Component {
           });
     }
 
-    render() {
+    render() { //render the original course to be updated and recorded in state
         const {
             title,
             description,
@@ -125,6 +125,7 @@ export default class UpdateCourse extends React.Component {
         );
     }
 
+    //everytime the input values change the state of the corresponding value will change as well.
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -156,24 +157,23 @@ export default class UpdateCourse extends React.Component {
         }
 
         const authUser = context.authenticatedUser;
-
+        //send a PUT request to the api with the information currently inserted in the body of the request
         context.data.updateCourse(course, this.props.match.params.id, authUser.email, context.password)
           .then( errors => {
             if (errors.length) {
               this.setState({errors});
             } else {
-              console.log(`Course "${title}" has been successfully updated!`);
-              this.props.history.push('/courses/' + this.props.match.params.id);
+              this.props.history.push('/courses/' + this.props.match.params.id); //If there are no errors with the request send the user to the course detail after its been updated
             }
           })
-          .catch( err => { // handle rejected promises
+          .catch( err => {
               console.log(err);
-              this.props.history.push('/error'); // push to history stack
+              this.props.history.push('/error');
           });
 
     }
 
     cancel = () => {
-        this.props.history.push('/courses/' + this.props.match.params.id);
+        this.props.history.push('/courses/' + this.props.match.params.id); //If the user cancels the update go back to the original courses detail page
     }
 }

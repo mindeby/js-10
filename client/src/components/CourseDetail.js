@@ -9,20 +9,20 @@ export default class Courses extends Component {
         this.state = {
             user: '',
             content: [],
-            authenticated: false,
+            authenticated: false, //If the user is not authenticated won't be able to update or delete said course
         }
-        this.delete = this.delete.bind(this);
-        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this); //bind the function so it has access to state and props
+        this.update = this.update.bind(this); //bind the function so it has access to state and props
     }
 
     componentDidMount() {
       const {context} = this.props;
-      const authUser = context.authenticatedUser;
+      const authUser = context.authenticatedUser; //check the logged in user's credentials
       axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
       .then(res => {
           this.setState({
-            content: res.data,
-            user: res.data.User,
+            content: res.data, //state content now holds requested course information
+            user: res.data.User, //get the user with permissions to manage the requested course
           })
         }
       )
@@ -39,10 +39,10 @@ export default class Courses extends Component {
                   };
               });
               this.props.history.push('/notfound');
-          } else {
-              if (authUser !== null) {
-                if (authUser.email === course.User.emailAddress) {
-                    this.setState({ authenticated: true });
+          } else { //If there is a course with the selected id
+              if (authUser !== null) { // if there is a logged in user
+                if (authUser.email === course.User.emailAddress) { //and his credentials match the ones of the owner of the requested course
+                    this.setState({ authenticated: true }); // the user is authenticated
                 }
               }
             }
@@ -53,7 +53,7 @@ export default class Courses extends Component {
       })
     }
 
-    delete() {
+    delete() { //call only available to authenticated user
       const {context} = this.props;
       const authUser = context.authenticatedUser;
       context.data.deleteCourse(this.props.match.params.id, authUser.email, context.password)
@@ -71,7 +71,7 @@ export default class Courses extends Component {
         });
     }
 
-    update(){
+    update(){ //path only available to authenticated user
       this.props.history.push(`/courses/${this.props.match.params.id}/update`);
     }
 
@@ -82,7 +82,7 @@ export default class Courses extends Component {
               <div className="actions--bar">
                   <div className="bounds">
                       <div className="grid-100">
-                          { (this.state.authenticated)
+                          { (this.state.authenticated) //If the user is authenticated show delete/update buttons
                                     ?
                                   <span>
                                       <Link className="button" onClick={this.update} to="#">Update Course</Link>

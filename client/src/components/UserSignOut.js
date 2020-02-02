@@ -5,6 +5,6 @@ export default ({ context }) => {
   context.actions.signOut();
 
   return (
-    <Redirect to="/" />
+    <Redirect to="/" /> //Go back to main page. Will also forget about the user information stored in the cookies
   );
 }

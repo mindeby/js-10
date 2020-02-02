@@ -94,9 +94,11 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 router.post('/courses', [
   check('title')
     .exists()
+    .not().isEmpty()
     .withMessage('Please provide a value for "title"'),
   check('description')
     .exists()
+    .not().isEmpty()
     .withMessage('Please provide a value for "description"')], authenticateUser, asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -118,9 +120,11 @@ router.post('/courses', [
 router.put('/courses/:id', [
   check('title')
     .exists()
+    .not().isEmpty()
     .withMessage('Please provide a value for "title"'),
   check('description')
     .exists()
+    .not().isEmpty()
     .withMessage('Please provide a value for "description"')], authenticateUser, asyncHandler(async (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

@@ -78,6 +78,7 @@ export default class UserSignUp extends Component {
     );
   }
 
+  //everytime the input values change the state of the corresponding value will change as well.
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -105,7 +106,7 @@ export default class UserSignUp extends Component {
       emailAddress,
       password
     };
-
+    //on submit check if the password and check password fields match, if they do create a new user with the given information, else send an alert to the page
     if (password === checkPassword){
       context.data.createUser(user).then( errors => {
          if (errors.length) {
@@ -117,9 +118,8 @@ export default class UserSignUp extends Component {
               });
             }
        })
-       .catch( err => { // handle rejected promises
-         console.log(err);
-         this.props.history.push('/error'); // push to history stack
+       .catch( err => {
+         this.props.history.push('/error'); //if there is an error creating the user render /error and display error stack
        });
     } else {
       alert("Please check again your password confirmation")
@@ -127,6 +127,6 @@ export default class UserSignUp extends Component {
   }
 
   cancel = () => {
-    this.props.history.push('/');
+    this.props.history.push('/'); //Go back to main page
   }
 }

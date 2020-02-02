@@ -51,6 +51,7 @@ export default class UserSignIn extends Component {
     );
   }
 
+  //everytime the input values change the state of the corresponding value will change as well.
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -66,19 +67,19 @@ export default class UserSignIn extends Component {
     const { context } = this.props;
     // (from) redirects users back to their previous screen doesn't matter in which path they are
     const { from } = this.props.location.state || { from: { pathname: '/' } };
-    const { emailAddress, password } = this.state;
 
-    //Try to sign in, if there is a user Sign In is successful and the user is redirected to previous page
+    const { emailAddress, password } = this.state;
+    //Try to sign in, if the user filled out both fields and the user exists in the database Sign In is successful and the user is redirected to previous page
     if (emailAddress && password){
       context.actions.signIn(emailAddress, password)
         .then( user => {
           if (user === null) {
             this.setState(() => {
-              return { errors: [ 'Sign-in was unsuccessful' ] };
+              return { errors: [ 'Sign-in was unsuccessful' ] }; //If there is no user in the data base that matched the login details add an error to the stack
             });
           } else {
             console.log("Successful authentication")
-            this.props.history.push(from);
+            this.props.history.push(from); //redirects to the user's previous page doesn't matter which one it was
           }
         })
         .catch(err => {
@@ -87,7 +88,7 @@ export default class UserSignIn extends Component {
         })
     } else {
       this.setState(() => {
-        return { errors: [ "You can't leave empty fields for EmailAddress and Password" ] };
+        return { errors: [ "You can't leave empty fields for Email Address and Password" ] };
       });
     }
 

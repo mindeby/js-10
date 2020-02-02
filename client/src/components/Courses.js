@@ -12,6 +12,7 @@ export default class Courses extends Component {
         }
     }
 
+    //Make a get request to the api getting all the courses in the database. You dont need to be authenticated to access this page
     componentDidMount() {
       axios.get("http://localhost:5000/api/courses")
       .then (res => {
@@ -22,7 +23,7 @@ export default class Courses extends Component {
     }
 
     render() {
-      const courses = this.state.courses.map((course, key) =>
+      const courses = this.state.courses.map((course, key) => //Give each child a unique id, which each course already has
       <div className="grid-33" key={course.id}>
         <Link className="course--module course--link" to={'/courses/' + course.id}>
           <h4 className="course--label">Course</h4>

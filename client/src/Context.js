@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import Data from './Data';
 //In React, Context is primarily used when some data needs to be accessible by many components at different nesting levels. Context lets you pass data through the component tree without having to pass props down manually at every level.
+//Create a new instance of Context
 const Context = React.createContext();
-
 export class Provider extends Component {
 
   constructor() {
     super();
-    this.data = new Data();
+    this.data = new Data(); // Data.js holds the helper functions to make the api calls
+    //context will track if the user is authenticated through the api or not and providing that info to the consumer components
+    //we want to remember the user information even if it changes tabs in browsers or reloads page.
     this.state = {
         authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
         password: Cookies.getJSON('password') || null,
@@ -37,7 +39,7 @@ export class Provider extends Component {
     );
   }
 
-
+//When signing in we make an api call to get the corresponding user, if there is a match the user is authenticated and will be tracked through context state
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
@@ -47,7 +49,7 @@ export class Provider extends Component {
           password: password,
         };
       });
-      // Set cookies for user and password
+      // Set cookies for user and password, they will expire in 1 day
       Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
       Cookies.set('password', JSON.stringify(password), { expires: 1 });
     }

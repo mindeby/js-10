@@ -1,5 +1,6 @@
 import React from 'react';
 
+//If the requested route doesn't exist render this Functional component
 export default function NotFound() {
     return(
         <div>

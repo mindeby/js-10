@@ -100,6 +100,7 @@ export default class CreateCourse extends React.Component {
         );
     }
 
+    //everytime the input values change the state of the corresponding value will change as well.
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -130,6 +131,7 @@ export default class CreateCourse extends React.Component {
 
         const authUser = context.authenticatedUser;
 
+        //Make a POST Request to the API giving the current information in this.state including the (authenticated) user info who created it and giving him permissions to update and delete the course
         context.data.createCourse(course, authUser.email, context.password)
           .then( errors => {
             if (errors.length) {

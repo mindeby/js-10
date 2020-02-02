@@ -1,3 +1,4 @@
+//Renders the App and all it's components to the page and imports the css syles
 import React from 'react';
 import ReactDOM from 'react-dom';
 

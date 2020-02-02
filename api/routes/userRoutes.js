@@ -95,7 +95,7 @@ router.post('/users', [
     .withMessage('Please provide a value for "emailAddress"'),
   check('password')
     .exists()
-    .isAlphanumeric()
+    .not().isEmpty()
     .withMessage('Please provide a value for "password"'),
 ], asyncHandler(async (req, res) => {
   const errors = validationResult(req);
