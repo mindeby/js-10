@@ -16,7 +16,7 @@ import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import Forbidden from './components/Forbidden';
-import Error from './components/Error';
+import UnhandledError from './components/UnhandledError';
 
 //Private Route Component to render Create and Update Course With Context only if the user is authenticated
 import PrivateRoute from './PrivateRoute';
@@ -49,7 +49,7 @@ export default () => (
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
         <Route path="/forbidden" component={Forbidden} />
-        <Route exact path="/error" component={Error} />
+        <Route exact path="/error" component={UnhandledError} />
         <Route component={NotFound} />
       </Switch>
     </div>

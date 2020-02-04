@@ -1,7 +1,7 @@
 import React from 'react';
 
 //If api requests return a 500 Internal Server Error this component will render
-export default function Error() {
+export default function UnhandledError() {
     return(
         <div>
         <hr />
